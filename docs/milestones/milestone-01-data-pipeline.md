@@ -20,3 +20,16 @@ Dataset hash: 5f90961780fc
 Key design decision: Invalid OHLC rows are currently dropped with warnings rather than terminating the run. This can later become a configurable data-quality policy.
 
 Status: 🟢 Milestone 1 Complete
+
+
+Validation extension:
+Tested the pipeline against deliberately corrupted OHLCV data containing
+duplicate timestamps, invalid OHLC relationships, negative values, and NaNs.
+
+21 input rows were successfully reduced to 15 clean bars:
+- 1 duplicate removed
+- 4 invalid OHLC/volume rows removed
+- 1 NaN row removed
+
+The cleaned dataset was successfully cached to Parquet with a deterministic
+data fingerprint: f1942181716d.
