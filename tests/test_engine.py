@@ -2,7 +2,8 @@ from engine.data import load_csv
 from engine.core import BacktestEngine
 import pandas as pd
 
-df = load_csv("data/raw/toy.csv")
+df = load_csv("data/raw/xauusd_1h_comma.csv")
+
 
 # Buy and hold: weight = 1.0 always
 signals = pd.Series(1.0, index=df.index)

@@ -1,7 +1,7 @@
 from engine.loader import load_strategy, validate_signals, StrategyError
 from engine.data import load_csv
 
-df = load_csv("data/raw/master_5min.csv")   # or a real CSV
+df = load_csv("data/raw/xauusd_1h_comma.csv")   # or a real CSV
 
 # Experiment 1: happy path
 fn = load_strategy("strategies/buy_hold.py")

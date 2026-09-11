@@ -82,29 +82,38 @@ class BacktestEngine:
         if eq_now <= 0:
             return
 
+        current_pos = self.pf.positions.get(sym, 0.0)
+        current_value = current_pos * price
         target_value = target_w * eq_now
-        current_value = self.pf.positions.get(sym, 0.0) * price
         delta_value = target_value - current_value
 
-        # No-trade band: skip tiny rebalances to avoid fee churn
-        if abs(delta_value) < self.no_trade_band * eq_now:
-            return
+        # --- Special case: going flat. Sell exactly the current position,
+        #     no fractional overshoot from slippage math.
+        if target_w == 0.0 and abs(current_pos) > 0:
+            qty = -current_pos
+        else:
+            # No-trade band: skip tiny rebalances
+            if abs(delta_value) < self.no_trade_band * eq_now:
+                return
+            slip = price * self.slippage_bps / 10_000
+            exec_price = price + slip if delta_value > 0 else price - slip
+            if exec_price <= 0:
+                return
+            qty = delta_value / exec_price
 
-        # Slippage: we pay a slightly worse price
+        # Compute execution price in the direction of the trade
         slip = price * self.slippage_bps / 10_000
-        exec_price = price + slip if delta_value > 0 else price - slip
+        exec_price = price + slip if qty > 0 else price - slip
         if exec_price <= 0:
             return
 
-        qty = delta_value / exec_price
         notional = abs(qty) * exec_price
         commission = notional * self.commission_bps / 10_000
 
-        # Cash accounting: buying costs cash, selling adds cash
         self.pf.cash -= qty * exec_price + commission
-        self.pf.positions[sym] = self.pf.positions.get(sym, 0.0) + qty
+        self.pf.positions[sym] = current_pos + qty
 
-        # Snap near-zero to zero to avoid 1e-12 dust positions
+        # Snap floating-point dust to zero
         if abs(self.pf.positions[sym]) < 1e-9:
             self.pf.positions[sym] = 0.0
 
