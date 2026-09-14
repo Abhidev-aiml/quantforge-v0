@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuantForge Tearsheet — {{ run_id }}</title>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
+  :root {
+    /* surfaces */
+    --bg: #FAF9F5;
+    --panel: #FFFFFF;
+    --panel-alt: #F5F4ED;
+    --border: #E8E6DD;
+    --border-strong: #D6D3C7;
+
+    /* text */
+    --text: #1F1F1F;
+    --text-muted: #6B6B6B;
+    --text-subtle: #95928A;
+
+    /* accents */
+    --accent: #D97757;
+    --accent-dark: #B85A38;
+    --accent-soft: #F2DACF;
+
+    /* semantic */
+    --positive: #4A7C59;
+    --positive-soft: #E3EDE4;
+    --negative: #B23A2E;
+    --negative-soft: #F4DEDB;
+    --warning: #C68A2E;
+
+    /* type */
+    --font-serif: 'Tiempos Headline', 'Charter', Georgia, 'Times New Roman', serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 40px 80px 40px;
+  }
+
+  /* ---------- typography ---------- */
+
+  h1, h2, h3 { margin: 0; font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; }
+
+  h1 {
+    font-size: 32px;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+  }
+
+  a { color: var(--accent-dark); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  a:hover { border-bottom-color: var(--accent); }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    background: var(--panel-alt);
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---------- header ---------- */
+
+  .header {
+    padding-bottom: 32px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 14px;
+  }
+
+  .header h1 { margin-bottom: 20px; }
+
+  .header .meta {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: -0.01em;
+  }
+
+  .header .meta strong {
+    color: var(--text-subtle);
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  /* ---------- verdict ---------- */
+
+  .verdict {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .verdict { grid-template-columns: 1fr; }
+  }
+
+  .verdict-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 24px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .verdict-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+    opacity: 0.5;
+  }
+
+  .verdict-card.yes::before { background: var(--positive); opacity: 1; }
+  .verdict-card.no::before  { background: var(--negative); opacity: 1; }
+
+  .verdict-card .label {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  .verdict-card .answer {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .verdict-card .answer.yes { color: var(--positive); }
+  .verdict-card .answer.no  { color: var(--negative); }
+  .verdict-card .answer.unknown { color: var(--text-subtle); }
+
+  .verdict-summary {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .verdict-summary .label {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  .verdict-summary .rc-note {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ---------- KPI tiles ---------- */
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 1000px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .kpi {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .kpi .label {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+  }
+
+  .kpi .value {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-feature-settings: 'tnum';
+  }
+
+  .value.pos { color: var(--positive); }
+  .value.neg { color: var(--negative); }
+  .value.neutral { color: var(--text); }
+
+  /* ---------- panels ---------- */
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 28px 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .panel h2 {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+  }
+
+  .panel-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .panel-row { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- tables ---------- */
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: -0.01em;
+    font-feature-settings: 'tnum';
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding-top: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+
+  td.num { text-align: right; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--panel-alt); }
+
+  .trades-table { font-size: 11px; }
+  .trades-table td { padding: 8px 12px; }
+
+  .muted {
+    color: var(--text-subtle);
+    font-size: 13px;
+    font-style: italic;
+    font-family: var(--font-sans);
+    margin: 0;
+  }
+
+  /* ---------- footer ---------- */
+
+  .footer {
+    color: var(--text-subtle);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    letter-spacing: -0.01em;
+  }
+
+  .footer .brand {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- section divider (subtle) ---------- */
+
+  .section {
+    margin-top: 48px;
+  }
+
+  .section:first-of-type {
+    margin-top: 0;
+  }
+</style>
+</head>
+<body>
+
+{# ---------- header ---------- #}
+<div class="header">
+  <div class="eyebrow">QuantForge · Executive Tearsheet</div>
+  <h1>{{ run_id }}</h1>
+  <div class="meta">
+    <strong>Strategy</strong> <code>{{ manifest.config.strategy.path }}</code><br>
+    <strong>Data</strong> <code>{{ manifest.config.data.path }}</code><br>
+    <strong>Config</strong> <code>{{ manifest.config_hash }}</code>
+    &nbsp;&nbsp;<strong>Data</strong> <code>{{ manifest.data_hash or "—" }}</code>
+    &nbsp;&nbsp;<strong>Git</strong> <code>{{ manifest.git_sha or "—" }}</code>
+    {% if manifest.git_dirty %}&nbsp;<em>(dirty)</em>{% endif %}
+  </div>
+</div>
+
+{# ---------- verdict ---------- #}
+<div class="verdict">
+  <div class="verdict-card {% if verdict.wf_robust == 'YES' %}yes{% elif verdict.wf_robust == 'NO' %}no{% endif %}">
+    <div class="label">Walk-forward robust</div>
+    <div class="answer {% if verdict.wf_robust == 'YES' %}yes{% elif verdict.wf_robust == 'NO' %}no{% else %}unknown{% endif %}">
+      {{ verdict.wf_robust }}
+    </div>
+  </div>
+  <div class="verdict-card {% if verdict.has_edge == 'YES' %}yes{% elif verdict.has_edge == 'NO' %}no{% endif %}">
+    <div class="label">Has edge over beta</div>
+    <div class="answer {% if verdict.has_edge == 'YES' %}yes{% elif verdict.has_edge == 'NO' %}no{% else %}unknown{% endif %}">
+      {{ verdict.has_edge }}
+    </div>
+  </div>
+  <div class="verdict-card {% if verdict.rc_significant == 'YES' %}yes{% elif verdict.rc_significant == 'NO' %}no{% endif %}">
+    <div class="label">White's RC significant</div>
+    <div class="answer {% if verdict.rc_significant == 'YES' %}yes{% elif verdict.rc_significant == 'NO' %}no{% else %}unknown{% endif %}">
+      {{ verdict.rc_significant }}
+    </div>
+  </div>
+</div>
+
+<div class="verdict-summary">
+  <div class="label">Summary</div>
+  {{ verdict.summary }}
+  {% if verdict.rc_best_combo %}
+  <div class="rc-note">
+    Best combo in RC: <strong>{{ verdict.rc_best_combo }}</strong>
+    {% if verdict.rc_p_value %} · p = {{ "%.4f"|format(verdict.rc_p_value) }}{% endif %}
+  </div>
+  {% endif %}
+</div>
+
+{# ---------- KPI tiles ---------- #}
+<div class="kpi-grid">
+  {% for label, value, cls in kpis %}
+  <div class="kpi">
+    <div class="label">{{ label }}</div>
+    <div class="value {{ cls }}">{{ value }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+{# ---------- equity ---------- #}
+<div class="section">
+  <div class="panel">
+    <h2>Equity Curve</h2>
+    {{ charts.equity | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel">
+      <h2>Cumulative Return</h2>
+      {{ charts.cumret | safe }}
+    </div>
+    <div class="panel">
+      <h2>Excess Return vs Buy &amp; Hold</h2>
+      {% if charts.excess %}{{ charts.excess | safe }}
+      {% else %}<p class="muted">Benchmark unavailable.</p>{% endif %}
+    </div>
+  </div>
+</div>
+
+{# ---------- risk ---------- #}
+<div class="section">
+  <div class="panel">
+    <h2>Drawdown</h2>
+    {{ charts.drawdown | safe }}
+  </div>
+
+  <div class="panel">
+    <h2>Top Drawdowns</h2>
+    {{ charts.top_dd | safe }}
+  </div>
+
+  <div class="panel">
+    <h2>Top 10 Drawdown Episodes</h2>
+    {{ top_dd_table | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel">
+      <h2>Rolling Volatility</h2>
+      {{ charts.vol | safe }}
+    </div>
+    <div class="panel">
+      <h2>Rolling VaR / CVaR (95%)</h2>
+      {{ charts.var | safe }}
+    </div>
+  </div>
+
+  <div class="panel-row">
+    <div class="panel">
+      <h2>Q-Q Plot vs Normal</h2>
+      {{ charts.qq | safe }}
+    </div>
+    <div class="panel">
+      <h2>Rolling Tail Ratio</h2>
+      {{ charts.tail | safe }}
+    </div>
+  </div>
+</div>
+
+{# ---------- distribution ---------- #}
+<div class="section">
+  <div class="panel-row">
+    <div class="panel">
+      <h2>Return Distribution</h2>
+      {{ charts.ret_dist | safe }}
+    </div>
+    <div class="panel">
+      <h2>Annual Returns</h2>
+      {{ charts.annual | safe }}
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Monthly Returns Heatmap</h2>
+    {{ charts.monthly | safe }}
+  </div>
+
+  <div class="panel">
+    <h2>Rolling CAGR</h2>
+    {{ charts.rolling_cagr | safe }}
+  </div>
+</div>
+
+{# ---------- all metrics ---------- #}
+<div class="section">
+  <div class="panel">
+    <h2>All Metrics</h2>
+    <table>
+      <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+      <tbody>
+        {% for key, val in metrics_rows %}
+        <tr><td>{{ key }}</td><td class="num">{{ val }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="brand">QuantForge</div>
+  Generated {{ manifest.started_utc }}
+</div>
+
+</body>
+</html>

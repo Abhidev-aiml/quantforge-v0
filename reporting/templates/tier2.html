@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuantForge Research Report — {{ run_id }}</title>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+{% include "_styles.html" %}
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">QuantForge · Research Report</div>
+  <h1>{{ run_id }}</h1>
+  <div class="meta">
+    <strong>Strategy</strong> <code>{{ manifest.config.strategy.path }}</code><br>
+    <strong>Data</strong> <code>{{ manifest.config.data.path }}</code><br>
+    <strong>Config</strong> <code>{{ manifest.config_hash }}</code>
+    &nbsp;&nbsp;<strong>Data</strong> <code>{{ manifest.data_hash or "—" }}</code>
+    &nbsp;&nbsp;<strong>Git</strong> <code>{{ manifest.git_sha or "—" }}</code>
+    {% if manifest.git_dirty %}&nbsp;<em>(dirty)</em>{% endif %}
+  </div>
+</div>
+
+<div class="verdict">
+  <div class="verdict-card {% if verdict.wf_robust == 'YES' %}yes{% elif verdict.wf_robust == 'NO' %}no{% endif %}">
+    <div class="label">Walk-forward robust</div>
+    <div class="answer {% if verdict.wf_robust == 'YES' %}yes{% elif verdict.wf_robust == 'NO' %}no{% else %}unknown{% endif %}">{{ verdict.wf_robust }}</div>
+  </div>
+  <div class="verdict-card {% if verdict.has_edge == 'YES' %}yes{% elif verdict.has_edge == 'NO' %}no{% endif %}">
+    <div class="label">Has edge over beta</div>
+    <div class="answer {% if verdict.has_edge == 'YES' %}yes{% elif verdict.has_edge == 'NO' %}no{% else %}unknown{% endif %}">{{ verdict.has_edge }}</div>
+  </div>
+  <div class="verdict-card {% if verdict.rc_significant == 'YES' %}yes{% elif verdict.rc_significant == 'NO' %}no{% endif %}">
+    <div class="label">White's RC significant</div>
+    <div class="answer {% if verdict.rc_significant == 'YES' %}yes{% elif verdict.rc_significant == 'NO' %}no{% else %}unknown{% endif %}">{{ verdict.rc_significant }}</div>
+  </div>
+</div>
+
+<div class="verdict-summary">
+  <div class="label">Summary</div>
+  {{ verdict.summary }}
+  {% if verdict.rc_best_combo %}
+  <div class="rc-note">
+    Best combo in RC: <strong>{{ verdict.rc_best_combo }}</strong>
+    {% if verdict.rc_p_value %} · p = {{ "%.4f"|format(verdict.rc_p_value) }}{% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="kpi-grid">
+  {% for label, value, cls in kpis %}
+  <div class="kpi">
+    <div class="label">{{ label }}</div>
+    <div class="value {{ cls }}">{{ value }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="toc">
+  <div class="label">Contents</div>
+  <ol>
+    <li><a href="#sec-a">Performance</a></li>
+    <li><a href="#sec-b">Risk</a></li>
+    <li><a href="#sec-c">Drawdown Analysis</a></li>
+    {% if has_trades %}<li><a href="#sec-d">Trade Analysis</a></li>{% endif %}
+    {% if has_mc %}<li><a href="#sec-e">Monte Carlo</a></li>{% endif %}
+    {% if has_wf %}<li><a href="#sec-f">Walk-Forward</a></li>{% endif %}
+    {% if has_rc %}<li><a href="#sec-g">White's Reality Check</a></li>{% endif %}
+    <li><a href="#sec-h">Regime Analysis</a></li>
+    <li><a href="#sec-i">Methodology &amp; Metrics</a></li>
+  </ol>
+</div>
+
+{# ---------- A. Performance ---------- #}
+<div class="section" id="sec-a">
+  <div class="section-number">Section A</div>
+  <h3 class="section-title">Performance</h3>
+
+  <div class="panel"><h2>Equity Curve</h2>{{ perf.equity | safe }}</div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Cumulative Return</h2>{{ perf.cumret | safe }}</div>
+    <div class="panel">
+      <h2>Excess Return vs Buy &amp; Hold</h2>
+      {% if perf.excess %}{{ perf.excess | safe }}{% else %}<p class="muted">Benchmark unavailable.</p>{% endif %}
+    </div>
+  </div>
+
+  <div class="panel"><h2>Rolling CAGR</h2>{{ perf.rolling_cagr | safe }}</div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Annual Returns</h2>{{ perf.annual | safe }}</div>
+    <div class="panel"><h2>Return Distribution</h2>{{ perf.ret_dist | safe }}</div>
+  </div>
+
+  <div class="panel"><h2>Monthly Returns Heatmap</h2>{{ perf.monthly | safe }}</div>
+</div>
+
+{# ---------- B. Risk ---------- #}
+<div class="section" id="sec-b">
+  <div class="section-number">Section B</div>
+  <h3 class="section-title">Risk</h3>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Rolling Volatility</h2>{{ risk.vol | safe }}</div>
+    <div class="panel"><h2>Rolling VaR / CVaR (95%)</h2>{{ risk.var | safe }}</div>
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Q-Q Plot vs Normal</h2>{{ risk.qq | safe }}</div>
+    <div class="panel"><h2>Rolling Tail Ratio</h2>{{ risk.tail | safe }}</div>
+  </div>
+</div>
+
+{# ---------- C. Drawdown ---------- #}
+<div class="section" id="sec-c">
+  <div class="section-number">Section C</div>
+  <h3 class="section-title">Drawdown Analysis</h3>
+
+  <div class="panel"><h2>Underwater Curve</h2>{{ dd.underwater | safe }}</div>
+  <div class="panel"><h2>Top Drawdowns on Equity</h2>{{ dd.top_dd | safe }}</div>
+  <div class="panel"><h2>Top 10 Drawdown Episodes</h2>{{ dd_table | safe }}</div>
+</div>
+
+{# ---------- D. Trades ---------- #}
+{% if has_trades %}
+<div class="section" id="sec-d">
+  <div class="section-number">Section D</div>
+  <h3 class="section-title">Trade Analysis</h3>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Trade PnL Distribution</h2>{{ trade.pnl_dist | safe }}</div>
+    <div class="panel"><h2>Cumulative PnL</h2>{{ trade.cum_pnl | safe }}</div>
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Holding Period Distribution</h2>{{ trade.holding | safe }}</div>
+    <div class="panel"><h2>Consecutive Streaks</h2>{{ trade.streaks | safe }}</div>
+  </div>
+
+  <div class="panel"><h2>Win vs Loss Breakdown</h2>{{ trade.win_loss | safe }}</div>
+  <div class="panel"><h2>Per-Trade PnL Timeline</h2>{{ trade.timeline | safe }}</div>
+
+  <div class="panel">
+    <h2>First 50 Trades</h2>
+    {{ trades_head | safe }}
+  </div>
+</div>
+{% endif %}
+
+{# ---------- E. Monte Carlo ---------- #}
+{% if has_mc %}
+<div class="section" id="sec-e">
+  <div class="section-number">Section E</div>
+  <h3 class="section-title">Monte Carlo</h3>
+
+  {% if mc.fan %}
+  <div class="panel">
+    <h2>Simulated Equity Paths — 200 bootstrap reruns</h2>
+    {{ mc.fan | safe }}
+  </div>
+  {% endif %}
+
+  {% if mc.terminal or mc.drawdown %}
+  <div class="panel-row">
+    {% if mc.terminal %}
+    <div class="panel"><h2>Terminal Wealth Distribution</h2>{{ mc.terminal | safe }}</div>
+    {% endif %}
+    {% if mc.drawdown %}
+    <div class="panel"><h2>Max Drawdown Distribution</h2>{{ mc.drawdown | safe }}</div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="panel">
+    <h2>Null Bootstrap — Is the mean return distinguishable from zero?</h2>
+    {{ mc.null | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>IID Bootstrap Sharpe CI</h2>{{ mc.iid | safe }}</div>
+    <div class="panel"><h2>Trade Bootstrap Sharpe CI</h2>{{ mc.trade | safe }}</div>
+  </div>
+
+  <div class="panel">
+    <h2>Block-Shuffle Sweep — p-value vs block size</h2>
+    {{ mc.sweep | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>CAGR Confidence Intervals</h2>{{ mc.cagr | safe }}</div>
+    <div class="panel"><h2>Probability of Ruin (MaxDD &lt; −50%)</h2>{{ mc.ruin | safe }}</div>
+  </div>
+</div>
+{% endif %}
+
+{# ---------- F. Walk-forward ---------- #}
+{% if has_wf %}
+<div class="section" id="sec-f">
+  <div class="section-number">Section F</div>
+  <h3 class="section-title">Walk-Forward Validation</h3>
+
+  <div class="panel">
+    <h2>Aggregate Sharpe — IS vs OOS vs Benchmark</h2>
+    {{ wf.summary | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>IS vs OOS Sharpe per Window</h2>{{ wf.scatter | safe }}</div>
+    <div class="panel"><h2>OOS Sharpe per Window</h2>{{ wf.oos_ser | safe }}</div>
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Excess Sharpe vs Same-Exposure Benchmark</h2>{{ wf.excess | safe }}</div>
+    <div class="panel"><h2>Trade Count per OOS Window</h2>{{ wf.counts | safe }}</div>
+  </div>
+</div>
+{% endif %}
+
+{# ---------- G. White's RC ---------- #}
+{% if has_rc %}
+<div class="section" id="sec-g">
+  <div class="section-number">Section G</div>
+  <h3 class="section-title">White's Reality Check</h3>
+
+  <div class="panel">
+    <h2>V-Statistic Bootstrap Distribution</h2>
+    {{ rc.v_dist | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Top 5 Combos by Excess Return</h2>{{ rc.top | safe }}</div>
+    <div class="panel"><h2>Positive vs Negative Combos</h2>{{ rc.combo | safe }}</div>
+  </div>
+</div>
+{% endif %}
+
+{# ---------- H. Regime ---------- #}
+<div class="section" id="sec-h">
+  <div class="section-number">Section H</div>
+  <h3 class="section-title">Regime Analysis</h3>
+
+  <div class="panel">
+    <h2>Equity Curve with Volatility Regime Overlay</h2>
+    {{ regime.overlay | safe }}
+  </div>
+
+  <div class="panel-row">
+    <div class="panel"><h2>Performance by Volatility Regime</h2>{{ regime.perf | safe }}</div>
+    <div class="panel"><h2>Bull vs Bear Attribution</h2>{{ regime.bullbear | safe }}</div>
+  </div>
+
+  {% if has_benchmark %}
+  <div class="panel"><h2>Rolling Beta to Benchmark (252d)</h2>{{ regime.beta | safe }}</div>
+  {% endif %}
+</div>
+
+{# ---------- I. Methodology + all metrics ---------- #}
+<div class="section" id="sec-i">
+  <div class="section-number">Section I</div>
+  <h3 class="section-title">Methodology &amp; Metrics</h3>
+
+  <div class="panel">
+    <h2>Execution Model</h2>
+    <p style="font-family: var(--font-sans); font-size: 13px; color: var(--text-muted); line-height: 1.7;">
+      Signals are computed at the close of bar <em>t</em> and executed at the open of bar <em>t+1</em>.
+      Directional slippage is applied (buys pay more, sells receive less).
+      Commission is charged on notional traded. Flat targets close the position exactly, without
+      residual dust. Warmup bars are treated as flat.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>Benchmark</h2>
+    <p style="font-family: var(--font-sans); font-size: 13px; color: var(--text-muted); line-height: 1.7;">
+      The benchmark is a passive long position in the underlying asset, scaled to the same starting
+      capital as the strategy. It does not charge transaction costs. Same-exposure comparisons in
+      the walk-forward section charge the strategy's average turnover cost to the passive alternative.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>All Metrics</h2>
+    <table>
+      <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+      <tbody>
+        {% for key, val in metrics_rows %}
+        <tr><td>{{ key }}</td><td class="num">{{ val }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="brand">QuantForge</div>
+  Generated {{ manifest.started_utc }}
+</div>
+
+</body>
+</html>
