@@ -1,0 +1,13 @@
+threshold,data_path,timeframe,n_windows,mean_IS_sharpe,mean_OOS_sharpe,degradation_ratio,robust,chained_OOS_sharpe,chained_OOS_benchmark_sharpe,chained_OOS_excess_sharpe,chained_OOS_CAGR,chained_OOS_maxdd,n_low_confidence,has_edge,status
+0.008,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.288,-0.361,1.253,False,-0.36,-0.708,0.348,-7.26,-74.35,36,True,success
+0.005,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.304,-0.38,1.25,False,-0.372,-0.703,0.331,-7.47,-75.34,36,True,success
+0.015,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.312,-0.39,1.252,False,-0.375,-0.704,0.33,-7.43,-75.39,36,True,success
+0.01,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.318,-0.39,1.229,False,-0.381,-0.709,0.328,-7.58,-75.83,36,True,success
+0.012,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.317,-0.398,1.255,False,-0.378,-0.706,0.328,-7.52,-76.0,36,True,success
+0.02,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.328,-0.417,1.27,False,-0.389,-0.71,0.32,-7.63,-76.19,36,True,success
+0.018,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.325,-0.415,1.277,False,-0.387,-0.705,0.318,-7.59,-76.16,36,True,success
+0.022,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.334,-0.412,1.237,False,-0.402,-0.709,0.307,-7.78,-76.75,36,True,success
+0.03,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.328,-0.4,1.222,False,-0.418,-0.718,0.3,-7.9,-77.28,36,True,success
+0.025,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.358,-0.427,1.193,False,-0.438,-0.713,0.274,-8.24,-78.74,36,True,success
+0.04,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.399,-0.469,1.175,False,-0.491,-0.731,0.24,-8.86,-81.13,36,True,success
+0.035,data/raw/daily/xauusd_1D_comma.csv,1D,36,-0.387,-0.458,1.183,False,-0.487,-0.722,0.235,-8.85,-81.06,36,True,success

@@ -1,0 +1,53 @@
+{
+  "method": "white_reality_check",
+  "n_bootstrap": 5000,
+  "T": 5531,
+  "K": 5,
+  "mean_block": 74.3706931526122,
+  "V_observed": 0.004709543189248356,
+  "best_combo": "01b_goldencross_ema_50_200 \u00d7 xauusd_1D_comma",
+  "best_mean_excess_return_per_bar": 6.332525608688558e-05,
+  "best_annualized_excess_return": 0.015957964533895166,
+  "top_5_combos": [
+    {
+      "label": "01b_goldencross_ema_50_200 \u00d7 xauusd_1D_comma",
+      "mean_excess_return_per_bar": 6.332525608688558e-05,
+      "annualized_excess_return": 0.015957964533895166,
+      "mean_excess_return_rank": 1
+    },
+    {
+      "label": "01d_goldencross_ema_20_60 \u00d7 xauusd_1D_comma",
+      "mean_excess_return_per_bar": 3.975517312394184e-05,
+      "annualized_excess_return": 0.010018303627233344,
+      "mean_excess_return_rank": 2
+    },
+    {
+      "label": "01a_goldencross_sma_50_200 \u00d7 xauusd_1D_comma",
+      "mean_excess_return_per_bar": 3.9605701557542546e-05,
+      "annualized_excess_return": 0.009980636792500722,
+      "mean_excess_return_rank": 3
+    },
+    {
+      "label": "01e_goldencross_ema_10_50 \u00d7 xauusd_1D_comma",
+      "mean_excess_return_per_bar": 2.639788532024344e-05,
+      "annualized_excess_return": 0.006652267100701347,
+      "mean_excess_return_rank": 4
+    },
+    {
+      "label": "01c_goldencross_ema_30_100 \u00d7 xauusd_1D_comma",
+      "mean_excess_return_per_bar": 2.3389777024390196e-05,
+      "annualized_excess_return": 0.00589422381014633,
+      "mean_excess_return_rank": 5
+    }
+  ],
+  "V_bootstrap_mean": 0.003014655163025251,
+  "V_bootstrap_std": 0.004177677557320208,
+  "V_bootstrap_p50": 0.002958862355223567,
+  "V_bootstrap_p95": 0.00985341096194786,
+  "V_bootstrap_p99": 0.012695943358587258,
+  "V_bootstrap_max": 0.01962249858244328,
+  "p_value": 0.3376,
+  "interpretation": "FAIL TO REJECT H0: best combo consistent with luck (p=0.3376 >= 0.05)",
+  "n_combos_with_positive_mean": 5,
+  "n_combos_with_negative_mean": 0
+}

@@ -1,0 +1,144 @@
+{
+  "strategy": "strategies/01_goldencross.py",
+  "description": "Golden Cross (50/200 SMA, long-only)",
+  "observed_sharpe": 0.6769245045758527,
+  "n_trades": 15,
+  "same_exposure": {
+    "avg_weight": 0.6682335924787561,
+    "strategy_sharpe": 0.6769245045758527,
+    "benchmark_sharpe": 0.7443135639515027,
+    "excess_sharpe": -0.06738905937564998,
+    "strategy_CAGR": 0.09137451840872046,
+    "benchmark_CAGR": 0.0842893261456068,
+    "excess_CAGR": 0.00708519226311366,
+    "strategy_maxdd": -0.37507222303527454,
+    "benchmark_maxdd": -0.3167248513942871
+  },
+  "null_bootstrap": {
+    "method": "null_block_21",
+    "n_sims": 5000,
+    "observed_sharpe": 0.6769245045758527,
+    "null_sharpe_mean": -0.015820116170561695,
+    "null_sharpe_std": 0.20928208688402028,
+    "null_sharpe_p05": -0.3585511508578599,
+    "null_sharpe_p95": 0.3334976687437959,
+    "p_value_one_sided": 0.0,
+    "p_value_two_sided": 0.001
+  },
+  "signal_shuffle_sweep": [
+    {
+      "block": 2,
+      "method": "signal_shuffle_block_2",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.3786647878078065,
+      "null_sharpe_std": 0.1230198674972311,
+      "null_sharpe_p05": 0.15797690895355343,
+      "null_sharpe_p95": 0.583788224558484,
+      "p_value": 0.006666666666666667
+    },
+    {
+      "block": 3,
+      "method": "signal_shuffle_block_3",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.4321918178419179,
+      "null_sharpe_std": 0.12546495412827657,
+      "null_sharpe_p05": 0.23273994661020264,
+      "null_sharpe_p95": 0.6416943003205676,
+      "p_value": 0.02
+    },
+    {
+      "block": 5,
+      "method": "signal_shuffle_block_5",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.5106614597062541,
+      "null_sharpe_std": 0.11842155092580725,
+      "null_sharpe_p05": 0.3188049908674709,
+      "null_sharpe_p95": 0.6992452568811792,
+      "p_value": 0.07
+    },
+    {
+      "block": 8,
+      "method": "signal_shuffle_block_8",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.5386361851161968,
+      "null_sharpe_std": 0.12337436550165565,
+      "null_sharpe_p05": 0.3372410326216515,
+      "null_sharpe_p95": 0.7436019246003642,
+      "p_value": 0.14
+    },
+    {
+      "block": 13,
+      "method": "signal_shuffle_block_13",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.571523292346164,
+      "null_sharpe_std": 0.11383990856728513,
+      "null_sharpe_p05": 0.3662095338668513,
+      "null_sharpe_p95": 0.7416091934371991,
+      "p_value": 0.18
+    },
+    {
+      "block": 21,
+      "method": "signal_shuffle_block_21",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.5831658206215139,
+      "null_sharpe_std": 0.1222768218199967,
+      "null_sharpe_p05": 0.386584313636532,
+      "null_sharpe_p95": 0.7896778449227682,
+      "p_value": 0.22
+    },
+    {
+      "block": 40,
+      "method": "signal_shuffle_block_40",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.5882807954316889,
+      "null_sharpe_std": 0.11847289440860387,
+      "null_sharpe_p05": 0.40104183241709523,
+      "null_sharpe_p95": 0.7908304326677617,
+      "p_value": 0.22666666666666666
+    },
+    {
+      "block": 80,
+      "method": "signal_shuffle_block_80",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.6051514206545975,
+      "null_sharpe_std": 0.128305019872684,
+      "null_sharpe_p05": 0.4031530379590597,
+      "null_sharpe_p95": 0.8296806538002477,
+      "p_value": 0.26666666666666666
+    },
+    {
+      "block": 160,
+      "method": "signal_shuffle_block_160",
+      "n_sims": 300,
+      "observed_sharpe": 0.6769245045758527,
+      "null_sharpe_mean": 0.6322583495262937,
+      "null_sharpe_std": 0.12202173278841968,
+      "null_sharpe_p05": 0.4146969133926082,
+      "null_sharpe_p95": 0.8303148795197964,
+      "p_value": 0.36
+    }
+  ],
+  "iid_ci": {
+    "method": "iid",
+    "n_sims": 5000,
+    "real_sharpe": 0.6769245045758527,
+    "real_CAGR": 0.09137451840872046,
+    "real_maxdd": -0.37507222303527454,
+    "sharpe_mean": 0.6779619602571268,
+    "sharpe_std": 0.21133154822478095,
+    "sharpe_p05": 0.32614031034017743,
+    "sharpe_p50": 0.6783950267363408,
+    "sharpe_p95": 1.0200090329976896,
+    "p_value_sharpe": 0.5028,
+    "p_value_CAGR": 0.4968,
+    "prob_ruin": 0.0348
+  }
+}

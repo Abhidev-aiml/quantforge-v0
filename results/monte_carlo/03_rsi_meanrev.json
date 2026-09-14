@@ -1,0 +1,161 @@
+{
+  "strategy": "strategies/03_rsi_meanrev.py",
+  "description": "RSI(2) Mean Reversion + 200 SMA filter",
+  "observed_sharpe": 0.2684854934494473,
+  "n_trades": 129,
+  "same_exposure": {
+    "avg_weight": 0.14120412222021334,
+    "strategy_sharpe": 0.2684854934494473,
+    "benchmark_sharpe": 0.7443135639515034,
+    "excess_sharpe": -0.4758280705020561,
+    "strategy_CAGR": 0.01532839889275528,
+    "benchmark_CAGR": 0.01843032174677761,
+    "excess_CAGR": -0.003101922854022332,
+    "strategy_maxdd": -0.1710665115697637,
+    "benchmark_maxdd": -0.07291429865402133
+  },
+  "null_bootstrap": {
+    "method": "null_block_21",
+    "n_sims": 5000,
+    "observed_sharpe": 0.2684854934494473,
+    "null_sharpe_mean": 0.009626091741193766,
+    "null_sharpe_std": 0.1949082442967045,
+    "null_sharpe_p05": -0.3118050113665877,
+    "null_sharpe_p95": 0.3352362036599083,
+    "p_value_one_sided": 0.0972,
+    "p_value_two_sided": 0.1712
+  },
+  "signal_shuffle_sweep": [
+    {
+      "block": 2,
+      "method": "signal_shuffle_block_2",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": -0.05606434128985439,
+      "null_sharpe_std": 0.1906197868446304,
+      "null_sharpe_p05": -0.3577268826215753,
+      "null_sharpe_p95": 0.24354484964167847,
+      "p_value": 0.04
+    },
+    {
+      "block": 3,
+      "method": "signal_shuffle_block_3",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.04152705897302857,
+      "null_sharpe_std": 0.18728247062886752,
+      "null_sharpe_p05": -0.25339817601270825,
+      "null_sharpe_p95": 0.3433501793544877,
+      "p_value": 0.11
+    },
+    {
+      "block": 5,
+      "method": "signal_shuffle_block_5",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.08295080297122803,
+      "null_sharpe_std": 0.20295928575665545,
+      "null_sharpe_p05": -0.24299812753024477,
+      "null_sharpe_p95": 0.4131690781400134,
+      "p_value": 0.18
+    },
+    {
+      "block": 8,
+      "method": "signal_shuffle_block_8",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.14588027800325784,
+      "null_sharpe_std": 0.20924346100725993,
+      "null_sharpe_p05": -0.23348315101812103,
+      "null_sharpe_p95": 0.4729163691442708,
+      "p_value": 0.2633333333333333
+    },
+    {
+      "block": 13,
+      "method": "signal_shuffle_block_13",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.1477430160411773,
+      "null_sharpe_std": 0.200691645450165,
+      "null_sharpe_p05": -0.17320760146969105,
+      "null_sharpe_p95": 0.4979626290036692,
+      "p_value": 0.26
+    },
+    {
+      "block": 21,
+      "method": "signal_shuffle_block_21",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.14206715151538746,
+      "null_sharpe_std": 0.19093417142692115,
+      "null_sharpe_p05": -0.18489210583608856,
+      "null_sharpe_p95": 0.45532602427294905,
+      "p_value": 0.25
+    },
+    {
+      "block": 40,
+      "method": "signal_shuffle_block_40",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.15358764861366717,
+      "null_sharpe_std": 0.19464179163709264,
+      "null_sharpe_p05": -0.13126030667497535,
+      "null_sharpe_p95": 0.48592974607575595,
+      "p_value": 0.2866666666666667
+    },
+    {
+      "block": 80,
+      "method": "signal_shuffle_block_80",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.19571747617404847,
+      "null_sharpe_std": 0.19925495706334265,
+      "null_sharpe_p05": -0.12166110394162855,
+      "null_sharpe_p95": 0.5168759797214316,
+      "p_value": 0.36
+    },
+    {
+      "block": 160,
+      "method": "signal_shuffle_block_160",
+      "n_sims": 300,
+      "observed_sharpe": 0.2684854934494473,
+      "null_sharpe_mean": 0.14306269503597444,
+      "null_sharpe_std": 0.2039261577929495,
+      "null_sharpe_p05": -0.18941784484920046,
+      "null_sharpe_p95": 0.4807434382867572,
+      "p_value": 0.27
+    }
+  ],
+  "iid_ci": {
+    "method": "iid",
+    "n_sims": 5000,
+    "real_sharpe": 0.2684854934494473,
+    "real_CAGR": 0.01532839889275528,
+    "real_maxdd": -0.1710665115697637,
+    "sharpe_mean": 0.26871479375419116,
+    "sharpe_std": 0.2111592701346456,
+    "sharpe_p05": -0.07573654248881333,
+    "sharpe_p50": 0.26564049805850004,
+    "sharpe_p95": 0.6170542757079379,
+    "p_value_sharpe": 0.4944,
+    "p_value_CAGR": 0.4968,
+    "prob_ruin": 0.0038
+  },
+  "trade_ci": {
+    "method": "trade_bootstrap",
+    "n_sims": 5000,
+    "n_trades": 129,
+    "real_sharpe": 0.3074764608397277,
+    "real_CAGR": 0.015574727007373168,
+    "real_final_equity_mult": 1.3962934809825631,
+    "sharpe_mean": 0.33314790617136303,
+    "sharpe_p05": -0.04752998530841435,
+    "sharpe_p50": 0.3146020450992987,
+    "sharpe_p95": 0.7842812952478859,
+    "p_value_sharpe": 0.5146,
+    "cagr_p05": -0.005113337471038059,
+    "cagr_p95": 0.03516844884504751,
+    "final_eq_p05": 0.8951791425813272,
+    "final_eq_p95": 2.1097849562533306
+  }
+}

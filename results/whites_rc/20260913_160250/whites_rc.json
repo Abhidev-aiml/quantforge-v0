@@ -1,0 +1,55 @@
+{
+  "method": "white_reality_check",
+  "n_bootstrap": 5000,
+  "T": 3199,
+  "K": 143,
+  "mean_block": 56.55970296951709,
+  "V_observed": 0.030238279221409193,
+  "best_combo": "02_emacross \u00d7 BRENTCMDUSD1440_comma",
+  "best_mean_excess_return_per_bar": 0.0005346258490378944,
+  "best_annualized_excess_return": 0.1347257139575494,
+  "top_5_combos": [
+    {
+      "label": "02_emacross \u00d7 BRENTCMDUSD1440_comma",
+      "mean_excess_return_per_bar": 0.0005346258490378944,
+      "annualized_excess_return": 0.1347257139575494,
+      "mean_excess_return_rank": 1
+    },
+    {
+      "label": "25_bollinger_rsi_double \u00d7 DEUIDXEUR1440_comma",
+      "mean_excess_return_per_bar": 0.0005154002573026331,
+      "annualized_excess_return": 0.12988086484026357,
+      "mean_excess_return_rank": 2
+    },
+    {
+      "label": "09_zscore_meanrev \u00d7 USATECHIDXUSD1440_comma",
+      "mean_excess_return_per_bar": 0.00031057700237267284,
+      "annualized_excess_return": 0.07826540459791355,
+      "mean_excess_return_rank": 3
+    },
+    {
+      "label": "25_bollinger_rsi_double \u00d7 USA30IDXUSD1440_comma",
+      "mean_excess_return_per_bar": 0.0003033469103699991,
+      "annualized_excess_return": 0.07644342141323977,
+      "mean_excess_return_rank": 4
+    },
+    {
+      "label": "25_bollinger_rsi_double \u00d7 BRENTCMDUSD1440_comma",
+      "mean_excess_return_per_bar": 0.0003032515971616885,
+      "annualized_excess_return": 0.0764194024847455,
+      "mean_excess_return_rank": 5
+    }
+  ],
+  "V_bootstrap_mean": 0.029639642913248224,
+  "V_bootstrap_std": 0.011617464794769333,
+  "V_bootstrap_p50": 0.02738197501453571,
+  "V_bootstrap_p95": 0.052047463570738355,
+  "V_bootstrap_p99": 0.06717114843753838,
+  "V_bootstrap_max": 0.08301143754240892,
+  "p_value": 0.4054,
+  "interpretation": "FAIL TO REJECT H0: best combo consistent with luck (p=0.4054 >= 0.05)",
+  "n_combos_with_positive_mean": 51,
+  "n_combos_with_negative_mean": 92
+}
+
+

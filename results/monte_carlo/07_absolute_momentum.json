@@ -1,0 +1,161 @@
+{
+  "strategy": "strategies/07_absolute_momentum.py",
+  "description": "Absolute Momentum (long/short, 12m)",
+  "observed_sharpe": 0.6373586068479425,
+  "n_trades": 67,
+  "same_exposure": {
+    "avg_weight": 0.6669679985536069,
+    "strategy_sharpe": 0.6373586068479425,
+    "benchmark_sharpe": 0.7443135639515059,
+    "excess_sharpe": -0.1069549571035634,
+    "strategy_CAGR": 0.08900834656701107,
+    "benchmark_CAGR": 0.08413743524278816,
+    "excess_CAGR": 0.004870911324222904,
+    "strategy_maxdd": -0.3678886393476736,
+    "benchmark_maxdd": -0.31619467856815486
+  },
+  "null_bootstrap": {
+    "method": "null_block_21",
+    "n_sims": 5000,
+    "observed_sharpe": 0.6373586068479425,
+    "null_sharpe_mean": -0.01389552915336303,
+    "null_sharpe_std": 0.20512662659738856,
+    "null_sharpe_p05": -0.3544732541218042,
+    "null_sharpe_p95": 0.3215768937338551,
+    "p_value_one_sided": 0.0002,
+    "p_value_two_sided": 0.0022
+  },
+  "signal_shuffle_sweep": [
+    {
+      "block": 2,
+      "method": "signal_shuffle_block_2",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.36837039016384304,
+      "null_sharpe_std": 0.11503297365645271,
+      "null_sharpe_p05": 0.1813032088422582,
+      "null_sharpe_p95": 0.5408243815756314,
+      "p_value": 0.013333333333333334
+    },
+    {
+      "block": 3,
+      "method": "signal_shuffle_block_3",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.4265982954609924,
+      "null_sharpe_std": 0.1185975597526566,
+      "null_sharpe_p05": 0.22621271235501067,
+      "null_sharpe_p95": 0.6150746023019444,
+      "p_value": 0.04
+    },
+    {
+      "block": 5,
+      "method": "signal_shuffle_block_5",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.49178017640064675,
+      "null_sharpe_std": 0.12823463814008668,
+      "null_sharpe_p05": 0.2837264246882027,
+      "null_sharpe_p95": 0.7002923488970041,
+      "p_value": 0.12333333333333334
+    },
+    {
+      "block": 8,
+      "method": "signal_shuffle_block_8",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.5132507566118789,
+      "null_sharpe_std": 0.12046870524381569,
+      "null_sharpe_p05": 0.3215295571567352,
+      "null_sharpe_p95": 0.7182620111790399,
+      "p_value": 0.18
+    },
+    {
+      "block": 13,
+      "method": "signal_shuffle_block_13",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.5536737588258515,
+      "null_sharpe_std": 0.11097619944296219,
+      "null_sharpe_p05": 0.3651744940113329,
+      "null_sharpe_p95": 0.7261399566651776,
+      "p_value": 0.21333333333333335
+    },
+    {
+      "block": 21,
+      "method": "signal_shuffle_block_21",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.5554244002129103,
+      "null_sharpe_std": 0.13165575600399101,
+      "null_sharpe_p05": 0.34455400970755146,
+      "null_sharpe_p95": 0.7550837939253788,
+      "p_value": 0.2633333333333333
+    },
+    {
+      "block": 40,
+      "method": "signal_shuffle_block_40",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.5724183982114037,
+      "null_sharpe_std": 0.10694482440665308,
+      "null_sharpe_p05": 0.40656669140654655,
+      "null_sharpe_p95": 0.7511968384957429,
+      "p_value": 0.2833333333333333
+    },
+    {
+      "block": 80,
+      "method": "signal_shuffle_block_80",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.5822248058304874,
+      "null_sharpe_std": 0.12304227244976049,
+      "null_sharpe_p05": 0.3858479427573514,
+      "null_sharpe_p95": 0.783652371061254,
+      "p_value": 0.31666666666666665
+    },
+    {
+      "block": 160,
+      "method": "signal_shuffle_block_160",
+      "n_sims": 300,
+      "observed_sharpe": 0.6373586068479425,
+      "null_sharpe_mean": 0.5991157590290596,
+      "null_sharpe_std": 0.12625185146528767,
+      "null_sharpe_p05": 0.3942441468492931,
+      "null_sharpe_p95": 0.7930835775336067,
+      "p_value": 0.3933333333333333
+    }
+  ],
+  "iid_ci": {
+    "method": "iid",
+    "n_sims": 5000,
+    "real_sharpe": 0.6373586068479425,
+    "real_CAGR": 0.08900834656701107,
+    "real_maxdd": -0.3678886393476736,
+    "sharpe_mean": 0.6379484187778156,
+    "sharpe_std": 0.21107382759995738,
+    "sharpe_p05": 0.288950506405342,
+    "sharpe_p50": 0.6391429469687546,
+    "sharpe_p95": 0.9859300152119329,
+    "p_value_sharpe": 0.5034,
+    "p_value_CAGR": 0.5002,
+    "prob_ruin": 0.056
+  },
+  "trade_ci": {
+    "method": "trade_bootstrap",
+    "n_sims": 5000,
+    "n_trades": 67,
+    "real_sharpe": 0.2943036033658838,
+    "real_CAGR": 0.04598319357125025,
+    "real_final_equity_mult": 2.6407887480441348,
+    "sharpe_mean": 0.25513458899570096,
+    "sharpe_p05": -0.07038420204429104,
+    "sharpe_p50": 0.2895991917119891,
+    "sharpe_p95": 0.49489678961961897,
+    "p_value_sharpe": 0.4844,
+    "cagr_p05": -0.00822015876351676,
+    "cagr_p95": 0.11570789878908432,
+    "final_eq_p05": 0.8367003982863565,
+    "final_eq_p95": 10.643664005690818
+  }
+}
