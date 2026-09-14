@@ -1,0 +1,29 @@
+data:
+  path: data/raw/daily/xauusd_1D_comma.csv
+  symbol: XAUUSD
+
+strategy:
+  path: strategies/24_vwap_reversion.py
+  params:
+    threshold: 0.015
+
+engine:
+  initial_cash: 100000.0
+  commission_bps: 1.0
+  slippage_bps: 5.0
+  no_trade_band: 0.01
+
+walk_forward:
+  train_bars: 756        # 3 years
+  test_bars: 252         # 1 year
+  step_bars: 126         # 6-month slide
+  warmup_bars: 252       # indicator warmup
+  compute_benchmark: true
+  min_trades_high_confidence: 5
+
+monte_carlo:
+  enabled: false
+
+output:
+  results_dir: results
+  save_manifest: true

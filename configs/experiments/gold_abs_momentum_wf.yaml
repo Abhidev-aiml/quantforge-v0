@@ -1,0 +1,27 @@
+data:
+  path: data/raw/daily/xauusd_1D_comma.csv
+  symbol: XAUUSD
+
+strategy:
+  path: strategies/07_absolute_momentum.py
+
+engine:
+  initial_cash: 100000.0
+  commission_bps: 1.0
+  slippage_bps: 5.0
+  no_trade_band: 0.01
+
+walk_forward:
+  train_bars: 756
+  test_bars: 252
+  step_bars: 126
+  warmup_bars: 252
+  compute_benchmark: true
+  min_trades_high_confidence: 5
+
+monte_carlo:
+  enabled: false
+
+output:
+  results_dir: results
+  save_manifest: true

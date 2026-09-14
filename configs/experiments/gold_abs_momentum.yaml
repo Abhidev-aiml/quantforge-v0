@@ -1,0 +1,11 @@
+# Experiment: Absolute Momentum on gold daily
+data:
+  path: data/raw/daily/xauusd_1D_comma.csv
+  symbol: XAUUSD
+
+strategy:
+  path: strategies/07_absolute_momentum.py
+
+monte_carlo:
+  n_sims: 5000
+  n_perm: 500
