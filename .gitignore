@@ -3,9 +3,9 @@
 # =========================
 
 __pycache__/
-*.py[cod]
-*$py.class
-
+*.pyc
+.pytest_cache/
+tests/fixtures/*.csv
 # =========================
 # Virtual Environment
 # =========================
@@ -28,7 +28,7 @@ env/
 
 # Generated Parquet cache
 data/cache/
-
+data/raw/
 # Generated backtest outputs
 # Uncomment if results/ will contain generated files
 # results/
@@ -64,3 +64,15 @@ data/cache/
 
 *.tmp
 *.temp
+
+# quantforge specific
+results/runs/
+!results/runs/.gitkeep
+reports/
+!reports/.gitkeep
+
+.venv/
+.envrc
+__pycache__/
+*.pyc
+.pytest_cache/
