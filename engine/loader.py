@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 from typing import Callable
 import pandas as pd
+import inspect
 
 
 class StrategyError(Exception):
@@ -83,3 +84,19 @@ def validate_signals(
         )
 
     return signals.astype(float).fillna(0.0)
+
+def call_strategy(fn, df, params: dict | None = None) -> pd.Series:
+    """Invoke a strategy function, passing params if the signature accepts it.
+
+    Backward-compatible: strategies that only accept (df) still work.
+    Strategies that accept (df, params) get the params dict.
+    """
+    sig = inspect.signature(fn)
+    accepts_params = (
+        "params" in sig.parameters
+        or any(p.kind == inspect.Parameter.VAR_KEYWORD
+               for p in sig.parameters.values())
+    )
+    if accepts_params:
+        return fn(df, params=params or {})
+    return fn(df)

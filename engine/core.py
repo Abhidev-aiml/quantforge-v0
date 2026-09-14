@@ -38,12 +38,15 @@ class BacktestEngine:
         commission_bps: float = 1.0,
         slippage_bps: float = 5.0,
         no_trade_band: float = 0.01,
+        warmup_bars: int = 0, 
     ):
         self.symbol = symbol
         self.pf = Portfolio(cash=initial_cash)
         self.commission_bps = commission_bps
         self.slippage_bps = slippage_bps
         self.no_trade_band = no_trade_band
+        self.warmup_bars = warmup_bars
+
 
     # ---- main loop ------------------------------------------------
 
@@ -52,28 +55,28 @@ class BacktestEngine:
         closes = df["close"].to_dict()
 
         pending_target: Optional[float] = None
+        for i, ts in enumerate(df.index):
+        # NEW: ignore signals during warmup
+            if i < self.warmup_bars:
+                self.pf.snapshot(ts, {self.symbol: closes[ts]})
+                continue
 
-        for ts in df.index:
-            # 1. Execute yesterday's signal at TODAY's open
             if pending_target is not None:
                 self._rebalance_at(pending_target, opens[ts], ts)
 
-            # 2. Mark to market at TODAY's close
             self.pf.snapshot(ts, {self.symbol: closes[ts]})
 
-            # 3. Read TODAY's signal → queue for tomorrow's open
             if ts in signals.index:
                 v = signals.loc[ts]
                 if pd.notna(v):
                     pending_target = float(v)
 
         eq = (
-            pd.DataFrame(self.pf.equity_curve)
-              .set_index("timestamp")["equity"]
-              .rename("equity")
+        pd.DataFrame(self.pf.equity_curve)
+          .set_index("timestamp")["equity"]
+          .rename("equity")
         )
         return eq
-
     # ---- execution ------------------------------------------------
 
     def _rebalance_at(self, target_w: float, price: float, ts) -> None:
@@ -87,25 +90,25 @@ class BacktestEngine:
         target_value = target_w * eq_now
         delta_value = target_value - current_value
 
-        # --- Special case: going flat. Sell exactly the current position,
-        #     no fractional overshoot from slippage math.
+        # No-trade band
+        if abs(delta_value) < self.no_trade_band * eq_now:
+            return
+
+        # Directional slippage
+        slip = price * self.slippage_bps / 10_000
+        exec_price = price + slip if delta_value > 0 else price - slip
+        if exec_price <= 0:
+            return
+
+        # Compute the quantity to trade.
+        # Special case: when going flat, sell exactly the current position.
+        # Otherwise the slippage-adjusted price overshoots the target,
+        # leaving a dust residual that never closes and confuses the
+        # round-trip trade extractor.
         if target_w == 0.0 and abs(current_pos) > 0:
             qty = -current_pos
         else:
-            # No-trade band: skip tiny rebalances
-            if abs(delta_value) < self.no_trade_band * eq_now:
-                return
-            slip = price * self.slippage_bps / 10_000
-            exec_price = price + slip if delta_value > 0 else price - slip
-            if exec_price <= 0:
-                return
             qty = delta_value / exec_price
-
-        # Compute execution price in the direction of the trade
-        slip = price * self.slippage_bps / 10_000
-        exec_price = price + slip if qty > 0 else price - slip
-        if exec_price <= 0:
-            return
 
         notional = abs(qty) * exec_price
         commission = notional * self.commission_bps / 10_000
