@@ -1,34 +1,47 @@
-from engine.loader import load_strategy, validate_signals, StrategyError
+from pathlib import Path
+
 from engine.data import load_csv
 
-df = load_csv("data/raw/xauusd_1h_comma.csv")   # or a real CSV
 
-# Experiment 1: happy path
-fn = load_strategy("strategies/buy_hold.py")
-sig = validate_signals(fn(df), df)
-print("Exp 1 ✅ buy_hold:", sig.iloc[0], sig.iloc[-1], sig.dtype)
+def test_folder(folder: str):
 
-# Experiment 2: SMA strategy
-fn = load_strategy("strategies/sma_cross.py")
-sig = validate_signals(fn(df), df)
-print("Exp 2 ✅ sma_cross: unique values:", sig.unique())
+    files = sorted(
+        Path(folder).glob("*_comma.csv")
+    )
 
-# Experiment 3: wrong return type
-try:
-    fn = load_strategy("strategies/broken_wrong_type.py")
-    validate_signals(fn(df), df)
-except StrategyError as e:
-    print("Exp 3 ✅ caught:", e)
+    print("\n" + "=" * 90)
+    print(f"LOADER TEST: {folder}")
+    print("=" * 90)
 
-# Experiment 4: no generate_signals function
-try:
-    load_strategy("strategies/broken_no_function.py")
-except StrategyError as e:
-    print("Exp 4 ✅ caught:", e)
+    for path in files:
 
-# Experiment 5: leverage out of range
-try:
-    fn = load_strategy("strategies/broken_leverage.py")
-    validate_signals(fn(df), df)
-except StrategyError as e:
-    print("Exp 5 ✅ caught:", e)
+        try:
+
+            df = load_csv(path)
+
+            print(
+                f"✅ {path.name:35} "
+                f"{len(df):8,} bars  "
+                f"{df.index[0]} → {df.index[-1]}"
+            )
+
+        except Exception as e:
+
+            print(
+                f"❌ {path.name}: {e}"
+            )
+
+
+def main():
+
+    test_folder(
+        "data/raw/fourhours"
+    )
+
+    test_folder(
+        "data/raw/onehours"
+    )
+
+
+if __name__ == "__main__":
+    main()
