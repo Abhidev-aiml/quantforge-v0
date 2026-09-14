@@ -1,6 +1,6 @@
 # strategies/10_roc_momentum.py
 import pandas as pd
-from strategies.indicators import roc
+from strategies.indicators.indicators import roc
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     N = 60

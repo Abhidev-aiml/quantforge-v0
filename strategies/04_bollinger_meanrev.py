@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from strategies.indicators import bollinger
+from strategies.indicators.indicators import bollinger
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     lower, mid, upper = bollinger(df["close"], 20, 2.0)

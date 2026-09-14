@@ -1,5 +1,5 @@
 import pandas as pd
-from strategies.indicators import ema
+from strategies.indicators.indicators import ema
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     fast = ema(df["close"], 12)

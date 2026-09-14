@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from strategies.indicators import ema, atr
+from strategies.indicators.indicators import ema, atr
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     mid = ema(df["close"], 20)

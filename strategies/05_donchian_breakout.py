@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from strategies.indicators import donchian
+from strategies.indicators.indicators import donchian
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     N_ENTRY, N_EXIT = 20, 10

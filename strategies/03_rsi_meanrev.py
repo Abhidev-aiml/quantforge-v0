@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from strategies.indicators import rsi, sma
+from strategies.indicators.indicators import rsi, sma
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     r = rsi(df["close"], 2)

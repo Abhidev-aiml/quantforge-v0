@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from strategies.indicators import zscore
+from strategies.indicators.indicators import zscore
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     z = zscore(df["close"], 20)

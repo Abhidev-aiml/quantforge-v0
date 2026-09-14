@@ -1,6 +1,6 @@
 # strategies/07_absolute_momentum.py
 import pandas as pd
-from strategies.indicators import roc
+from strategies.indicators.indicators import roc
 
 def generate_signals(df: pd.DataFrame) -> pd.Series:
     lookback = 252   # 12 months
