@@ -4,9 +4,11 @@ Report builder CLI.
 Usage:
     python -m reporting.build results/runs/<run_id>
     python -m reporting.build results/runs/<run_id> --tier 1
+    python -m reporting.build results/runs/<run_id> --tier 2
+    python -m reporting.build results/runs/<run_id> --tier 2 --pdf
+    python -m reporting.build --latest --tier 2 --pdf --pdf-format A4
     python -m reporting.build results/runs/<run_id> --name my-custom-name
     python -m reporting.build results/runs/<run_id> --auto-open always
-    python -m reporting.build --latest
 """
 from __future__ import annotations
 import argparse
@@ -22,6 +24,7 @@ from reporting.tiers.tier1_executive import build_tier1
 
 DEFAULT_REPORTS_DIR = "reports"
 DEFAULT_AUTO_OPEN = "ask"
+DEFAULT_PDF_FORMAT = "Letter"
 
 
 def _latest_run(results_dir: str | Path = "results/runs") -> Path:
@@ -38,6 +41,8 @@ def build(
     name_override: str | None = None,
     tier: int = 1,
     auto_open: str = DEFAULT_AUTO_OPEN,
+    pdf: bool = False,
+    pdf_format: str = DEFAULT_PDF_FORMAT,
 ) -> Path:
     """
     Build a report from a run directory.
@@ -48,6 +53,8 @@ def build(
         name_override: Optional custom report folder name
         tier: Which tier(s) to build (1=executive, 2=research, 3=cross)
         auto_open: Browser auto-open behavior (ask/always/never)
+        pdf: Whether to also render PDF versions
+        pdf_format: Page size for PDF export (Letter, A4, Legal, Tabloid)
 
     Returns:
         Path to the report directory
@@ -70,28 +77,46 @@ def build(
         if src.exists():
             shutil.copy2(src, report_dir / ref)
 
-   # Build tiers
-    outputs = []
+    # Build HTML tiers
+    html_outputs: list[Path] = []
     if tier >= 1:
         out = build_tier1(run_dir, output_path=report_dir / "report_executive.html")
-        outputs.append(out)
+        html_outputs.append(out)
     if tier >= 2:
         from reporting.tiers.tier2_research import build_tier2
         out = build_tier2(run_dir, output_path=report_dir / "report_full.html")
-        outputs.append(out)
+        html_outputs.append(out)
+
+    # Optional PDF rendering
+    pdf_outputs: list[Path] = []
+    if pdf:
+        from reporting.export.pdf import render_pdfs, is_available
+        if not is_available():
+            print()
+            print("⚠️  Playwright is not available. To enable PDF export:")
+            print("      pip install playwright")
+            print("      python -m playwright install chromium")
+        else:
+            print()
+            print(f"Rendering PDFs ({pdf_format})...")
+            jobs = [(html, html.with_suffix(".pdf")) for html in html_outputs]
+            pdf_outputs = render_pdfs(jobs, pdf_format=pdf_format)
 
     # Print summary
     print()
     print("=" * 72)
     print(f"  Report: {report_dir}")
-    for out in outputs:
+    for out in html_outputs:
+        size_kb = out.stat().st_size / 1024
+        print(f"    {out.name:32s}  {size_kb:8.1f} KB")
+    for out in pdf_outputs:
         size_kb = out.stat().st_size / 1024
         print(f"    {out.name:32s}  {size_kb:8.1f} KB")
     print("=" * 72)
 
-    # Auto-open
-    if outputs:
-        open_in_browser(outputs[0], mode=auto_open)
+    # Auto-open the first HTML output
+    if html_outputs:
+        open_in_browser(html_outputs[0], mode=auto_open)
 
     return report_dir
 
@@ -112,6 +137,11 @@ def main():
     p.add_argument("--auto-open", choices=["ask", "always", "never"],
                    default=DEFAULT_AUTO_OPEN,
                    help="browser auto-open behavior")
+    p.add_argument("--pdf", action="store_true",
+                   help="also render PDF versions of the reports")
+    p.add_argument("--pdf-format", default=DEFAULT_PDF_FORMAT,
+                   choices=["Letter", "A4", "Legal", "Tabloid"],
+                   help=f"page size for PDF export (default: {DEFAULT_PDF_FORMAT})")
     args = p.parse_args()
 
     if args.latest:
@@ -128,6 +158,8 @@ def main():
         name_override=args.name,
         tier=args.tier,
         auto_open=args.auto_open,
+        pdf=args.pdf,
+        pdf_format=args.pdf_format,
     )
 
 

@@ -64,6 +64,8 @@ class OutputConfig(BaseModel):
     results_dir: str = "results"
     reports_dir: str = "reports"
     auto_open: str = "ask"  # ask | always | never
+    pdf_enabled: bool = False
+    pdf_format: str = "Letter"  # "Letter" | "A4" | "Legal" | "Tabloid"
     run_name: str | None = None
     save_manifest: bool = True
 

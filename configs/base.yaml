@@ -29,5 +29,7 @@ output:
   results_dir: results
   reports_dir: reports
   auto_open: ask       # ask | always | never
+  pdf_enabled: false   # generate PDF versions
+  pdf_format: Letter   # Letter | A4 | Legal | Tabloid
   run_name: null
   save_manifest: true
