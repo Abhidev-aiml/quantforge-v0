@@ -54,6 +54,8 @@ from reporting.charts.regime import (
     chart_bull_bear_performance, chart_rolling_beta,
 )
 
+from reporting.captions import build_captions
+
 
 TEMPLATE_DIR = Path(__file__).parent.parent / "templates"
 _jinja_env = Environment(
@@ -98,6 +100,9 @@ def build_tier2(
     output_path = Path(output_path) if output_path else (
         art.run_dir / "report_full.html"
     )
+
+    # Build captions for every chart
+    captions = build_captions(art)
 
     # ---- prepare common inputs ----
     kpis = kpi_tiles(art.metrics)
@@ -221,6 +226,7 @@ def build_tier2(
         has_rc=has_rc,
         wf_aggregate=art.walk_forward or {},
         rc_aggregate=art.whites_rc or {},
+        captions=captions,
     )
     output_path.write_text(html)
     return output_path

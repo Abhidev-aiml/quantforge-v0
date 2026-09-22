@@ -16,6 +16,9 @@ import json
 import shutil
 from pathlib import Path
 
+import numpy as np
+import pandas as pd
+
 from reporting.engine import ReportEngine
 from reporting.paths import resolve_report_dir
 from reporting.open_report import open_in_browser
@@ -33,6 +36,65 @@ def _latest_run(results_dir: str | Path = "results/runs") -> Path:
     if not runs:
         raise SystemExit(f"No runs found in {results_dir}")
     return max(runs, key=lambda p: p.stat().st_mtime)
+
+
+def _ensure_mc_paths(run_dir: Path, n_sims: int = 2000, seed: int = 42) -> None:
+    """
+    If the run's monte_carlo.json is missing the `paths` section,
+    simulate equity paths now and rewrite the file.
+
+    This makes the fan chart, terminal-wealth, and drawdown panels
+    work for runs produced by any runner — including run_from_config
+    which doesn't do path simulation by default.
+    """
+    mc_path = run_dir / "monte_carlo.json"
+    if not mc_path.exists():
+        return
+
+    try:
+        mc = json.loads(mc_path.read_text())
+    except Exception:
+        return
+
+    if "paths" in mc:
+        return
+
+    eq_path = run_dir / "equity.csv"
+    if not eq_path.exists():
+        return
+
+    try:
+        from validation.monte_carlo import simulate_equity_paths
+
+        df = pd.read_csv(eq_path)
+        for col in ("timestamp", "date", "index"):
+            if col in df.columns:
+                df[col] = pd.to_datetime(df[col])
+                df = df.set_index(col)
+                break
+        num_cols = df.select_dtypes(include=[np.number]).columns
+        if not len(num_cols):
+            return
+        equity = df[num_cols[0]].astype(float).sort_index()
+
+        print(f"    (simulating MC paths for {run_dir.name} ...)")
+        mc["paths"] = simulate_equity_paths(
+            equity,
+            n_sims=n_sims,
+            block_size=20,
+            n_paths_saved=200,
+            max_bars=400,
+            seed=seed,
+        )
+        mc_path.write_text(json.dumps(mc, indent=2, default=str))
+    except Exception as e:
+        print(f"    ⚠️  could not simulate paths: {e}")
+
+
+def _load_run_artifacts(run_dir: Path):
+    """Load ReportEngine after ensuring MC paths exist."""
+    _ensure_mc_paths(run_dir)
+    return ReportEngine(run_dir).load()
 
 
 def build(
@@ -63,8 +125,8 @@ def build(
     if not run_dir.exists():
         raise SystemExit(f"Run dir not found: {run_dir}")
 
-    # Load artifacts once so we can pull the manifest for naming
-    art = ReportEngine(run_dir).load()
+    # Ensure MC paths exist, then load artifacts
+    art = _load_run_artifacts(run_dir)
 
     # Resolve where the report should live
     report_dir = resolve_report_dir(

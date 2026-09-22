@@ -76,3 +76,6 @@ reports/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Playwright downloads its own Chromium — don't commit it
+.playwright/

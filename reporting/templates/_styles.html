@@ -17,7 +17,7 @@
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
     body { max-width: 1180px; margin: 0 auto; padding: 56px 40px 80px 40px; }
-  
+
     h1, h2, h3 { margin: 0; font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; }
     h1 { font-size: 32px; line-height: 1.2; color: var(--text); letter-spacing: -0.02em; }
     h2 {
@@ -31,7 +31,7 @@
       margin-bottom: 22px; padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
     }
-  
+
     a { color: var(--accent-dark); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
     a:hover { border-bottom-color: var(--accent); }
     code {
@@ -39,7 +39,7 @@
       background: var(--panel-alt); padding: 2px 6px; border-radius: 3px;
       letter-spacing: -0.01em;
     }
-  
+
     .header { padding-bottom: 32px; margin-bottom: 36px; border-bottom: 1px solid var(--border); }
     .header .eyebrow {
       font-family: var(--font-sans); font-size: 11px; font-weight: 600;
@@ -52,7 +52,7 @@
       line-height: 2; letter-spacing: -0.01em;
     }
     .header .meta strong { color: var(--text-subtle); font-weight: 500; margin-right: 4px; }
-  
+
     .verdict { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
     @media (max-width: 900px) { .verdict { grid-template-columns: 1fr; } }
     .verdict-card {
@@ -78,7 +78,7 @@
     .verdict-card .answer.yes { color: var(--positive); }
     .verdict-card .answer.no  { color: var(--negative); }
     .verdict-card .answer.unknown { color: var(--text-subtle); }
-  
+
     .verdict-summary {
       background: var(--panel); border: 1px solid var(--border);
       border-radius: 8px; padding: 24px 28px; margin-bottom: 40px;
@@ -94,7 +94,7 @@
       margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
       font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);
     }
-  
+
     .kpi-grid {
       display: grid; grid-template-columns: repeat(6, 1fr);
       gap: 12px; margin-bottom: 40px;
@@ -115,7 +115,7 @@
     .value.pos { color: var(--positive); }
     .value.neg { color: var(--negative); }
     .value.neutral { color: var(--text); }
-  
+
     .panel {
       background: var(--panel); border: 1px solid var(--border);
       border-radius: 8px; padding: 28px 28px 24px 28px; margin-bottom: 16px;
@@ -127,7 +127,7 @@
     }
     .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     @media (max-width: 900px) { .panel-row { grid-template-columns: 1fr; } }
-  
+
     table {
       width: 100%; border-collapse: collapse; font-family: var(--font-mono);
       font-size: 12px; letter-spacing: -0.01em; font-feature-settings: 'tnum';
@@ -145,7 +145,7 @@
     .trades-table { font-size: 11px; }
     .trades-table td { padding: 8px 12px; }
     .muted { color: var(--text-subtle); font-size: 13px; font-style: italic; font-family: var(--font-sans); margin: 0; }
-  
+
     .footer {
       color: var(--text-subtle); font-family: var(--font-mono); font-size: 11px;
       text-align: center; margin-top: 60px; padding-top: 28px;
@@ -155,7 +155,7 @@
       font-family: var(--font-serif); font-size: 13px; color: var(--text-muted);
       letter-spacing: 0; margin-bottom: 6px;
     }
-  
+
     .section { margin-top: 48px; }
     .section:first-of-type { margin-top: 0; }
     .section-title {
@@ -169,7 +169,7 @@
       color: var(--text-subtle); letter-spacing: 0.12em;
       margin-bottom: 6px; text-transform: uppercase;
     }
-  
+
     /* TOC */
     .toc {
       background: var(--panel); border: 1px solid var(--border);
@@ -194,4 +194,149 @@
     }
     .toc a { color: var(--text); border-bottom: none; }
     .toc a:hover { color: var(--accent-dark); }
-  </style>
+
+    /* Caption styling */
+    .caption {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin: 16px 0 0 0;
+      padding: 14px 18px;
+      background: var(--panel-alt);
+      border-left: 3px solid var(--accent-soft);
+      border-radius: 4px;
+    }
+
+    /* Plotly chart min-height to prevent collapse during PDF capture */
+    .plotly-graph-div { min-height: 340px; }
+
+    /* ============================================================
+       PRINT STYLES — applied when the report is rendered to PDF
+       or printed from a browser.
+       ============================================================ */
+    @media print {
+
+    /* Force exact color rendering (browsers strip backgrounds by default) */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    html, body {
+      background: white;
+      color: #000;
+      font-size: 10pt;
+      line-height: 1.45;
+    }
+
+    body {
+      max-width: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* ---------- Typography for print ---------- */
+
+    h1 { font-size: 20pt; }
+    h2 { font-size: 8pt; letter-spacing: 0.10em; }
+    h3 { font-size: 14pt; }
+    .section-title {
+      font-size: 16pt;
+      margin-bottom: 14pt;
+      padding-bottom: 8pt;
+    }
+    .section-number { font-size: 8pt; }
+
+    .kpi .value { font-size: 15pt; }
+    .verdict-card .answer { font-size: 20pt; }
+
+    .kpi .label,
+    .verdict-card .label,
+    .toc .label,
+    .verdict-summary .label {
+      font-size: 7.5pt;
+    }
+
+    /* ---------- Page structure ---------- */
+
+    /* Every major section starts on a fresh page */
+    .section {
+      break-before: page;
+      page-break-before: always;
+    }
+    .section:first-of-type {
+      break-before: auto;
+      page-break-before: auto;
+    }
+
+    /* Don't orphan headings from their content */
+    .section-title,
+    .section-number,
+    h2, h3 {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    /* Keep cards and panels intact */
+    .panel,
+    .kpi,
+    .verdict-card,
+    .toc {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* Tables: don't split rows */
+    table { break-inside: auto; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    thead { display: table-header-group; }
+
+    /* ---------- Compact spacing for print ---------- */
+
+    .header {
+      padding-bottom: 16pt;
+      margin-bottom: 20pt;
+    }
+    .verdict { gap: 10pt; margin-bottom: 14pt; }
+    .verdict-summary { padding: 14pt 16pt; margin-bottom: 18pt; }
+    .kpi-grid { gap: 8pt; margin-bottom: 18pt; }
+    .kpi { padding: 12pt 14pt; }
+    .panel { padding: 14pt 16pt; margin-bottom: 10pt; }
+    .panel-row { gap: 10pt; margin-bottom: 10pt; }
+    .toc { padding: 14pt 16pt; margin-bottom: 18pt; }
+    .toc li { padding: 4pt 0; font-size: 10pt; }
+
+    /* ---------- Table styling for print ---------- */
+
+    th, td { padding: 5pt 8pt; font-size: 8.5pt; }
+    .trades-table td { padding: 4pt 6pt; font-size: 8pt; }
+
+    /* ---------- Links: not clickable in print ---------- */
+
+    a {
+      color: var(--text);
+      border-bottom: none;
+    }
+
+    /* ---------- Hide the on-page footer (PDF has its own) ---------- */
+
+    .footer { display: none; }
+
+    /* ---------- Chart containers ---------- */
+
+    .plotly-graph-div {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      min-height: 300px !important;
+    }
+
+    /* Caption print styles */
+    .caption {
+      font-size: 9pt;
+      padding: 8pt 10pt;
+      margin-top: 8pt;
+      break-inside: avoid;
+    }
+    }
+</style>

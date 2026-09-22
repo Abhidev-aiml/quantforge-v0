@@ -68,7 +68,7 @@
     {% if has_wf %}<li><a href="#sec-f">Walk-Forward</a></li>{% endif %}
     {% if has_rc %}<li><a href="#sec-g">White's Reality Check</a></li>{% endif %}
     <li><a href="#sec-h">Regime Analysis</a></li>
-    <li><a href="#sec-i">Methodology &amp; Metrics</a></li>
+    <li><a href="#sec-i">Methodology & Metrics</a></li>
   </ol>
 </div>
 
@@ -77,24 +77,24 @@
   <div class="section-number">Section A</div>
   <h3 class="section-title">Performance</h3>
 
-  <div class="panel"><h2>Equity Curve</h2>{{ perf.equity | safe }}</div>
+  <div class="panel"><h2>Equity Curve</h2>{{ perf.equity | safe }}<p class="caption">{{ captions.equity }}</p></div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Cumulative Return</h2>{{ perf.cumret | safe }}</div>
+    <div class="panel"><h2>Cumulative Return</h2>{{ perf.cumret | safe }}<p class="caption">{{ captions.cumret }}</p></div>
     <div class="panel">
-      <h2>Excess Return vs Buy &amp; Hold</h2>
-      {% if perf.excess %}{{ perf.excess | safe }}{% else %}<p class="muted">Benchmark unavailable.</p>{% endif %}
+      <h2>Excess Return vs Buy & Hold</h2>
+      {% if perf.excess %}{{ perf.excess | safe }}<p class="caption">{{ captions.excess }}</p>{% else %}<p class="muted">Benchmark unavailable.</p>{% endif %}
     </div>
   </div>
 
-  <div class="panel"><h2>Rolling CAGR</h2>{{ perf.rolling_cagr | safe }}</div>
+  <div class="panel"><h2>Rolling CAGR</h2>{{ perf.rolling_cagr | safe }}<p class="caption">{{ captions.rolling_cagr }}</p></div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Annual Returns</h2>{{ perf.annual | safe }}</div>
-    <div class="panel"><h2>Return Distribution</h2>{{ perf.ret_dist | safe }}</div>
+    <div class="panel"><h2>Annual Returns</h2>{{ perf.annual | safe }}<p class="caption">{{ captions.annual }}</p></div>
+    <div class="panel"><h2>Return Distribution</h2>{{ perf.ret_dist | safe }}<p class="caption">{{ captions.ret_dist }}</p></div>
   </div>
 
-  <div class="panel"><h2>Monthly Returns Heatmap</h2>{{ perf.monthly | safe }}</div>
+  <div class="panel"><h2>Monthly Returns Heatmap</h2>{{ perf.monthly | safe }}<p class="caption">{{ captions.monthly }}</p></div>
 </div>
 
 {# ---------- B. Risk ---------- #}
@@ -103,13 +103,13 @@
   <h3 class="section-title">Risk</h3>
 
   <div class="panel-row">
-    <div class="panel"><h2>Rolling Volatility</h2>{{ risk.vol | safe }}</div>
-    <div class="panel"><h2>Rolling VaR / CVaR (95%)</h2>{{ risk.var | safe }}</div>
+    <div class="panel"><h2>Rolling Volatility</h2>{{ risk.vol | safe }}<p class="caption">{{ captions.vol }}</p></div>
+    <div class="panel"><h2>Rolling VaR / CVaR (95%)</h2>{{ risk.var | safe }}<p class="caption">{{ captions.var }}</p></div>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Q-Q Plot vs Normal</h2>{{ risk.qq | safe }}</div>
-    <div class="panel"><h2>Rolling Tail Ratio</h2>{{ risk.tail | safe }}</div>
+    <div class="panel"><h2>Q-Q Plot vs Normal</h2>{{ risk.qq | safe }}<p class="caption">{{ captions.qq }}</p></div>
+    <div class="panel"><h2>Rolling Tail Ratio</h2>{{ risk.tail | safe }}<p class="caption">{{ captions.tail }}</p></div>
   </div>
 </div>
 
@@ -118,9 +118,9 @@
   <div class="section-number">Section C</div>
   <h3 class="section-title">Drawdown Analysis</h3>
 
-  <div class="panel"><h2>Underwater Curve</h2>{{ dd.underwater | safe }}</div>
-  <div class="panel"><h2>Top Drawdowns on Equity</h2>{{ dd.top_dd | safe }}</div>
-  <div class="panel"><h2>Top 10 Drawdown Episodes</h2>{{ dd_table | safe }}</div>
+  <div class="panel"><h2>Underwater Curve</h2>{{ dd.underwater | safe }}<p class="caption">{{ captions.drawdown }}</p></div>
+  <div class="panel"><h2>Top Drawdowns on Equity</h2>{{ dd.top_dd | safe }}<p class="caption">{{ captions.top_dd }}</p></div>
+  <div class="panel"><h2>Top 10 Drawdown Episodes</h2>{{ dd_table | safe }}<p class="caption">{{ captions.top_dd }}</p></div>
 </div>
 
 {# ---------- D. Trades ---------- #}
@@ -130,17 +130,17 @@
   <h3 class="section-title">Trade Analysis</h3>
 
   <div class="panel-row">
-    <div class="panel"><h2>Trade PnL Distribution</h2>{{ trade.pnl_dist | safe }}</div>
-    <div class="panel"><h2>Cumulative PnL</h2>{{ trade.cum_pnl | safe }}</div>
+    <div class="panel"><h2>Trade PnL Distribution</h2>{{ trade.pnl_dist | safe }}<p class="caption">{{ captions.trade_pnl_dist }}</p></div>
+    <div class="panel"><h2>Cumulative PnL</h2>{{ trade.cum_pnl | safe }}<p class="caption">{{ captions.trade_cum_pnl }}</p></div>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Holding Period Distribution</h2>{{ trade.holding | safe }}</div>
-    <div class="panel"><h2>Consecutive Streaks</h2>{{ trade.streaks | safe }}</div>
+    <div class="panel"><h2>Holding Period Distribution</h2>{{ trade.holding | safe }}<p class="caption">{{ captions.trade_holding }}</p></div>
+    <div class="panel"><h2>Consecutive Streaks</h2>{{ trade.streaks | safe }}<p class="caption">{{ captions.trade_streaks }}</p></div>
   </div>
 
-  <div class="panel"><h2>Win vs Loss Breakdown</h2>{{ trade.win_loss | safe }}</div>
-  <div class="panel"><h2>Per-Trade PnL Timeline</h2>{{ trade.timeline | safe }}</div>
+  <div class="panel"><h2>Win vs Loss Breakdown</h2>{{ trade.win_loss | safe }}<p class="caption">{{ captions.trade_win_loss }}</p></div>
+  <div class="panel"><h2>Per-Trade PnL Timeline</h2>{{ trade.timeline | safe }}<p class="caption">{{ captions.trade_cum_pnl }}</p></div>
 
   <div class="panel">
     <h2>First 50 Trades</h2>
@@ -159,16 +159,17 @@
   <div class="panel">
     <h2>Simulated Equity Paths — 200 bootstrap reruns</h2>
     {{ mc.fan | safe }}
+    <p class="caption">{{ captions.mc_fan }}</p>
   </div>
   {% endif %}
 
   {% if mc.terminal or mc.drawdown %}
   <div class="panel-row">
     {% if mc.terminal %}
-    <div class="panel"><h2>Terminal Wealth Distribution</h2>{{ mc.terminal | safe }}</div>
+    <div class="panel"><h2>Terminal Wealth Distribution</h2>{{ mc.terminal | safe }}<p class="caption">{{ captions.mc_terminal }}</p></div>
     {% endif %}
     {% if mc.drawdown %}
-    <div class="panel"><h2>Max Drawdown Distribution</h2>{{ mc.drawdown | safe }}</div>
+    <div class="panel"><h2>Max Drawdown Distribution</h2>{{ mc.drawdown | safe }}<p class="caption">{{ captions.mc_drawdown }}</p></div>
     {% endif %}
   </div>
   {% endif %}
@@ -176,21 +177,23 @@
   <div class="panel">
     <h2>Null Bootstrap — Is the mean return distinguishable from zero?</h2>
     {{ mc.null | safe }}
+    <p class="caption">{{ captions.mc_null }}</p>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>IID Bootstrap Sharpe CI</h2>{{ mc.iid | safe }}</div>
-    <div class="panel"><h2>Trade Bootstrap Sharpe CI</h2>{{ mc.trade | safe }}</div>
+    <div class="panel"><h2>IID Bootstrap Sharpe CI</h2>{{ mc.iid | safe }}<p class="caption">{{ captions.mc_null }}</p></div>
+    <div class="panel"><h2>Trade Bootstrap Sharpe CI</h2>{{ mc.trade | safe }}<p class="caption">{{ captions.mc_null }}</p></div>
   </div>
 
   <div class="panel">
     <h2>Block-Shuffle Sweep — p-value vs block size</h2>
     {{ mc.sweep | safe }}
+    <p class="caption">{{ captions.mc_sweep }}</p>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>CAGR Confidence Intervals</h2>{{ mc.cagr | safe }}</div>
-    <div class="panel"><h2>Probability of Ruin (MaxDD &lt; −50%)</h2>{{ mc.ruin | safe }}</div>
+    <div class="panel"><h2>CAGR Confidence Intervals</h2>{{ mc.cagr | safe }}<p class="caption">{{ captions.mc_null }}</p></div>
+    <div class="panel"><h2>Probability of Ruin (MaxDD < −50%)</h2>{{ mc.ruin | safe }}<p class="caption">{{ captions.mc_null }}</p></div>
   </div>
 </div>
 {% endif %}
@@ -204,16 +207,17 @@
   <div class="panel">
     <h2>Aggregate Sharpe — IS vs OOS vs Benchmark</h2>
     {{ wf.summary | safe }}
+    <p class="caption">{{ captions.wf_summary }}</p>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>IS vs OOS Sharpe per Window</h2>{{ wf.scatter | safe }}</div>
-    <div class="panel"><h2>OOS Sharpe per Window</h2>{{ wf.oos_ser | safe }}</div>
+    <div class="panel"><h2>IS vs OOS Sharpe per Window</h2>{{ wf.scatter | safe }}<p class="caption">{{ captions.wf_scatter }}</p></div>
+    <div class="panel"><h2>OOS Sharpe per Window</h2>{{ wf.oos_ser | safe }}<p class="caption">{{ captions.wf_scatter }}</p></div>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Excess Sharpe vs Same-Exposure Benchmark</h2>{{ wf.excess | safe }}</div>
-    <div class="panel"><h2>Trade Count per OOS Window</h2>{{ wf.counts | safe }}</div>
+    <div class="panel"><h2>Excess Sharpe vs Same-Exposure Benchmark</h2>{{ wf.excess | safe }}<p class="caption">{{ captions.wf_excess }}</p></div>
+    <div class="panel"><h2>Trade Count per OOS Window</h2>{{ wf.counts | safe }}<p class="caption">{{ captions.wf_counts }}</p></div>
   </div>
 </div>
 {% endif %}
@@ -227,11 +231,12 @@
   <div class="panel">
     <h2>V-Statistic Bootstrap Distribution</h2>
     {{ rc.v_dist | safe }}
+    <p class="caption">{{ captions.rc }}</p>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Top 5 Combos by Excess Return</h2>{{ rc.top | safe }}</div>
-    <div class="panel"><h2>Positive vs Negative Combos</h2>{{ rc.combo | safe }}</div>
+    <div class="panel"><h2>Top 5 Combos by Excess Return</h2>{{ rc.top | safe }}<p class="caption">{{ captions.rc_top_combos }}</p></div>
+    <div class="panel"><h2>Positive vs Negative Combos</h2>{{ rc.combo | safe }}<p class="caption">{{ captions.rc_top_combos }}</p></div>
   </div>
 </div>
 {% endif %}
@@ -244,22 +249,23 @@
   <div class="panel">
     <h2>Equity Curve with Volatility Regime Overlay</h2>
     {{ regime.overlay | safe }}
+    <p class="caption">{{ captions.regime_overlay }}</p>
   </div>
 
   <div class="panel-row">
-    <div class="panel"><h2>Performance by Volatility Regime</h2>{{ regime.perf | safe }}</div>
-    <div class="panel"><h2>Bull vs Bear Attribution</h2>{{ regime.bullbear | safe }}</div>
+    <div class="panel"><h2>Performance by Volatility Regime</h2>{{ regime.perf | safe }}<p class="caption">{{ captions.regime_perf }}</p></div>
+    <div class="panel"><h2>Bull vs Bear Attribution</h2>{{ regime.bullbear | safe }}<p class="caption">{{ captions.regime_bull_bear }}</p></div>
   </div>
 
   {% if has_benchmark %}
-  <div class="panel"><h2>Rolling Beta to Benchmark (252d)</h2>{{ regime.beta | safe }}</div>
+  <div class="panel"><h2>Rolling Beta to Benchmark (252d)</h2>{{ regime.beta | safe }}<p class="caption">{{ captions.regime_beta }}</p></div>
   {% endif %}
 </div>
 
 {# ---------- I. Methodology + all metrics ---------- #}
 <div class="section" id="sec-i">
   <div class="section-number">Section I</div>
-  <h3 class="section-title">Methodology &amp; Metrics</h3>
+  <h3 class="section-title">Methodology & Metrics</h3>
 
   <div class="panel">
     <h2>Execution Model</h2>

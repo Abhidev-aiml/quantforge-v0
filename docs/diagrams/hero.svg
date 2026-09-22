@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <!-- Gradient definitions -->
+    <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e">
+        <animate attributeName="stop-color" values="#1a1a2e;#16213e;#1a1a2e" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#0f3460">
+        <animate attributeName="stop-color" values="#0f3460;#16213e;#0f3460" dur="8s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e94560">
+        <animate attributeName="stop-color" values="#e94560;#ff6b6b;#e94560" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#0f3460"/>
+    </linearGradient>
+
+    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e94560" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#e94560" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Filter for glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip path for rounded corners -->
+    <clipPath id="cardClip">
+      <rect x="0" y="0" width="1200" height="400" rx="12" ry="12"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#heroGradient)" clip-path="url(#cardClip)"/>
+
+  <!-- Grid pattern overlay -->
+  <g opacity="0.1" stroke="#e94560" stroke-width="0.5">
+    <line x1="0" y1="50" x2="1200" y2="50">
+      <animate attributeName="opacity" values="0.05;0.15;0.05" dur="3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="150" x2="1200" y2="150"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="250" x2="1200" y2="250"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="350" x2="1200" y2="350"/>
+
+    <line x1="100" y1="0" x2="100" y2="400"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="500" y1="0" x2="500" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="700" y1="0" x2="700" y2="400"/>
+    <line x1="800" y1="0" x2="800" y2="400"/>
+    <line x1="900" y1="0" x2="900" y2="400"/>
+    <line x1="1000" y1="0" x2="1000" y2="400"/>
+    <line x1="1100" y1="0" x2="1100" y2="400"/>
+  </g>
+
+  <!-- Decorative glowing line -->
+  <rect x="0" y="380" width="1200" height="4" fill="url(#accentGradient)" opacity="0.5">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Animated circles -->
+  <g filter="url(#glow)">
+    <circle cx="100" cy="80" r="20" fill="none" stroke="#e94560" stroke-width="1" opacity="0.5">
+      <animate attributeName="r" values="15;25;15" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1100" cy="320" r="25" fill="none" stroke="#e94560" stroke-width="1" opacity="0.4">
+      <animate attributeName="r" values="20;30;20" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="80" cy="350" r="15" fill="none" stroke="#e94560" stroke-width="1" opacity="0.3">
+      <animate attributeName="r" values="10;20;10" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1120" cy="60" r="18" fill="none" stroke="#e94560" stroke-width="1" opacity="0.35">
+      <animate attributeName="r" values="12;22;12" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Floating particles -->
+  <g fill="#e94560" opacity="0.4">
+    <circle cx="200" cy="150" r="3">
+      <animate attributeName="cy" values="150;130;150" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="400" cy="280" r="2">
+      <animate attributeName="cy" values="280;260;280" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="600" cy="180" r="4">
+      <animate attributeName="cy" values="180;160;180" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="800" cy="300" r="2">
+      <animate attributeName="cy" values="300;280;300" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1000" cy="120" r="3">
+      <animate attributeName="cy" values="120;100;120" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Main title -->
+  <text x="600" y="140" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" letter-spacing="4">
+    <tspan fill="#e94560">⚡</tspan> QuantForge
+    <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="185" text-anchor="middle" fill="#a0a0a0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="400">
+    Research-Grade Backtesting Framework with Complete Statistical Validation
+  </text>
+
+  <!-- Tagline with typing animation effect -->
+  <text x="600" y="230" text-anchor="middle" fill="#e94560" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" opacity="0.9">
+    Event-Driven • Multi-Asset • Walk-Forward Validated • Statistically Rigorous
+  </text>
+
+  <!-- Stats row -->
+  <g transform="translate(300, 300)">
+    <!-- Stat 1 -->
+    <g transform="translate(0, 0)">
+      <text x="60" y="20" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700">146</text>
+      <text x="60" y="45" text-anchor="middle" fill="#888888" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400">Tests</text>
+    </g>
+
+    <!-- Divider -->
+    <rect x="130" y="15" width="1" height="40" fill="#333333"/>
+
+    <!-- Stat 2 -->
+    <g transform="translate(140, 0)">
+      <text x="70" y="20" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700">10</text>
+      <text x="70" y="45" text-anchor="middle" fill="#888888" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400">Milestones</text>
+    </g>
+
+    <!-- Divider -->
+    <rect x="220" y="15" width="1" height="40" fill="#333333"/>
+
+    <!-- Stat 3 -->
+    <g transform="translate(240, 0)">
+      <text x="70" y="20" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700">25+</text>
+      <text x="70" y="45" text-anchor="middle" fill="#888888" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400">Strategies</text>
+    </g>
+
+    <!-- Divider -->
+    <rect x="320" y="15" width="1" height="40" fill="#333333"/>
+
+    <!-- Stat 4 -->
+    <g transform="translate(340, 0)">
+      <text x="70" y="20" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700">3</text>
+      <text x="70" y="45" text-anchor="middle" fill="#888888" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400">Validation Layers</text>
+    </g>
+  </g>
+
+  <!-- Bottom indicator -->
+  <g transform="translate(600, 370)">
+    <rect x="-20" y="0" width="40" height="3" rx="1.5" fill="#e94560">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>
